@@ -7,6 +7,7 @@ import reduxThunk from 'redux-thunk';
 
 import App from './components/app';
 import Tournament from './components/tournament';
+import TournamentList from './components/tournament_list';
 import Home from './components/home';
 import Public from './components/public';
 import Account from './components/account';
@@ -36,6 +37,8 @@ ReactDOM.render(
           <Route path="/public" component= {Public} />
           <Route path="/account" component= {RequireAuth(Account)} />
           <Route path="/tournament" component= {Tournament} />
+          <Route path="/tournament_list" component= {TournamentList} />
+
           <Route path="/signin" component= {Signin} />
           <Route path="/signup" component= {Signup} />
           <Route path="/signout" component= {Signout} />

@@ -42,7 +42,7 @@ class Header extends Component {
                             <NavLink className="nav-link" to="/account">Account</NavLink>
                         </li>
                         <li className="nav-item">
-                            <NavLink className="nav-link" to="/tournament">Tournament</NavLink>
+                            <NavLink className="nav-link" to="/tournament_list">Tournament</NavLink>
                         </li>
                     </ul>
                     <ul className="navbar-nav">
