@@ -41,12 +41,11 @@ Schema.pre('save', function(next){
 })
 
 // Make use of methods for comparedPassword
-Schema.methods.comparedPassword = function(candidatePassword, cb) {
+Schema.methods.comparedPassword = function(candidatePassword, callback) {
     bcrypt.compare(candidatePassword, this.password, function(err, good){
-        if (err ) { return cb(err)}
-        cb(null, good);
+        if (err ) { return callback(err)}
+        callback(null, good);
     })
 }
 
-// Export the model
 export default mongoose.model('User', Schema);
