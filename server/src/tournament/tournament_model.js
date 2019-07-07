@@ -1,16 +1,13 @@
 /* eslint-disable no-irregular-whitespace */
-import mongoose from 'mongoose';
+// import * as mongoose from 'mongoose';
+import { Schema, model } from "mongoose";
 
-const tournamentSchema = new mongoose.Schema({
-  _id: tournamentSchema.Types.ObjectId,
-  name: String,
-  date: {
-    start: Date,
-    end: Date
-  },
-  winner: { type: tournamentSchema.Types.ObjectId, ref: 'Player' },
-  players:[{ type: tournamentSchema.Types.ObjectId, ref: 'Player' }],
-  rounds:[{type: tournamentSchema.Types.ObjectId, ref: 'Round'}],
-})
+const tournamentSchema = new Schema({
+  name: { type: String, required: true, unique: true },
+  date: { type: Date, required: true },
+  winner: { type: Schema.Types.ObjectId, ref: "Player" },
+  players: [{ type: Schema.Types.ObjectId, ref: "Player" }],
+  rounds: [{ type: Schema.Types.ObjectId, ref: "Round" }]
+});
 
-export default mongoose.model('Tournament', tournamentSchema);
+export default model.call(require("mongoose"), "Tournament", tournamentSchema);
