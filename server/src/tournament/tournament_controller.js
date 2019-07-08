@@ -1,6 +1,11 @@
 import TournamentModel from "./tournament_model";
 
 export default {
+  getTournaments: (req, res, next) => {
+    TournamentModel.find({}, (err, tournaments) => {
+      return res.json({ tournaments });
+    });
+  },
   create: (req, res, next) => {
     const { name, date } = req.body;
     console.log("Hits the tournament endpoint: ", req.body);
@@ -12,7 +17,6 @@ export default {
     TournamentModel.findOne({ name }, function(err, existingTournament) {
       if (err) return res.status(422).send(err);
       if (existingTournament) {
-        console.log("TOURNAMENT ALREADY EXISTS WITH THAT NAME");
         return res
           .status(422)
           .send({ error: "Tournament with this name already exists." });
@@ -27,9 +31,24 @@ export default {
         }
         res.json({
           success: true,
-          tournament
+          tournament: savedTournament
         });
       });
+    });
+  },
+
+  findTournament: (req, res, next) => {
+    const { tournamentName } = req.query;
+    TournamentModel.findOne({ name: tournamentName }, function(
+      err,
+      foundTournament
+    ) {
+      if (err) return res.status(422).send(err);
+      if (foundTournament) {
+        return res.json({ tournament: foundTournament });
+      } else {
+        return res.status(404).send("Tournament not found");
+      }
     });
   }
 };

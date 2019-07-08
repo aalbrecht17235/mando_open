@@ -8,32 +8,48 @@ export class CreateTournament extends Component {
       name: "",
       error: null
     };
-    this.submitNewTournament = this.submitNewTournament.bind(this);
+    this.createNewTournament = this.createNewTournament.bind(this);
   }
-  submitNewTournament() {
-    console.log("Submitting new Tournament.");
-    const date = new Date();
+  createNewTournament() {
+    const date = this.state.date;
     const name = this.state.name;
     axios
-      .post("/tournament/create", {
-        name,
-        date
+      .post("/tournament/create", { name, date })
+      .then(res => {
+        console.log("Response from create tournament", res);
+        const { name } = res.data.tournament;
+        this.props.history.push(`/tournament/${name}`);
       })
-      .then(res => console.log("Response from create tournament", res))
       .catch(err =>
         console.log("Error occured while attempting to create Tournament", err)
       );
   }
+
   render() {
     return (
       <form>
-        <input
-          type="text"
-          value={this.state.name}
-          onChange={e => this.setState({ name: e.target.value })}
-          placeholder="Tournament name"
-        />
-        <button onClick={this.submitNewTournament}>Submit</button>
+        <div>
+          Tournament name:
+          <input
+            type="text"
+            value={this.state.name}
+            onChange={e => this.setState({ name: e.target.value })}
+            placeholder="Tournament name"
+            style={{ margin: "10px" }}
+          />
+        </div>
+        <div>
+          Start Date:
+          <input
+            type="date"
+            value={this.state.date}
+            onChange={e => this.setState({ date: e.target.value })}
+            style={{ margin: "10px" }}
+          />
+        </div>
+        <div>
+          <button onClick={this.createNewTournament}>Submit</button>
+        </div>
       </form>
     );
   }
