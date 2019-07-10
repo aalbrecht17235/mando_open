@@ -30,7 +30,7 @@ class CurrentTournament extends Component {
         ) : (
           <div>
             Current Tournament name: {this.state.tournament.name}
-            <RoundList />
+            <RoundList tournamentId={this.state.tournament._id} />
           </div>
         )}
       </div>
