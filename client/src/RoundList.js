@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import CreateRound from "./components/CreateRound";
+import Round from "./components/Round";
 
 class RoundList extends Component {
   constructor(props) {
@@ -25,9 +26,7 @@ class RoundList extends Component {
       <div>
         {this.state.rounds.length > 0 ? (
           rounds.map(round => (
-            <div key={`Round${round.number}`}>
-              This is round number: {round.number}
-            </div>
+            <Round key={`round${round.number}+${tournamentId}`} round={round} />
           ))
         ) : (
           <div>There are no rounds</div>
