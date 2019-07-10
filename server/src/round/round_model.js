@@ -1,5 +1,4 @@
 /* eslint-disable no-irregular-whitespace */
-// import * as mongoose from 'mongoose';
 import { Schema, model } from "mongoose";
 
 const roundSchema = new Schema({
