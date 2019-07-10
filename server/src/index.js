@@ -1,51 +1,56 @@
+import express from "express";
+import http from "http";
+import bodyParser from "body-parser";
+import morgan from "morgan";
+import mongoose from "mongoose";
+import cors from "cors";
+import config from "./config";
+import Middlewares from "./api/middlewares";
+import Authentication from "./api/authentication";
+import UserRouter from "./user/router";
+import TournamentRouter from "./tournament/tournament_router";
+import RoundRouter from "./round/round_router";
 
-import express from 'express';
-import http from 'http';
-import bodyParser from 'body-parser';
-import morgan from 'morgan';
-import mongoose from 'mongoose';
-import cors from 'cors';
-import config from './config';
-import Middlewares from './api/middlewares'
-import Authentication from './api/authentication'
-import UserRouter from './user/router'
-import TournamentRouter from './tournament/tournament_router';
-
-if(!process.env.JWT_SECRET) {
-    const err = new Error('No JWT_SECRET in env variable');
-    console.error(err);
+if (!process.env.JWT_SECRET) {
+  const err = new Error("No JWT_SECRET in env variable");
+  console.error(err);
 }
 
 const app = express();
 
-mongoose.connect(config.mongoose.uri, { useMongoClient: true })
-.catch(err=>console.error(err));
+mongoose
+  .connect(config.mongoose.uri, { useMongoClient: true })
+  .catch(err => console.error(err));
 
 mongoose.Promise = global.Promise;
 
 // App Setup
-app.use(cors({
-    origin: ['https://www.ohheyitsandrew.com', 'http://localhost:3000']
-}));
-app.use(morgan('dev'));
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({extended: false}));
-app.get('/ping', (req, res) => res.send('pong'))
-app.get('/', (req, res) => res.json({'source': 'MERN Stack App'}))
-app.post('/signup', Authentication.signup)
-app.post('/signin', Authentication.signin)
-app.get('/auth-ping', Middlewares.loginRequired, (req, res) => res.send('connected'))
-app.use('/user', Middlewares.loginRequired, UserRouter)
-app.use('/tournament', TournamentRouter)
-
+app.use(
+  cors({
+    origin: ["https://www.mondo-open.com", "http://localhost:3000"]
+  })
+);
+app.use(morgan("dev"));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.get("/ping", (req, res) => res.send("pong"));
+app.get("/", (req, res) => res.json({ source: "Mondo Open!" }));
+app.post("/signup", Authentication.signup);
+app.post("/signin", Authentication.signin);
+app.get("/auth-ping", Middlewares.loginRequired, (req, res) =>
+  res.send("connected")
+);
+app.use("/user", Middlewares.loginRequired, UserRouter);
+app.use("/tournament", TournamentRouter);
+app.use("/round", RoundRouter);
 
 app.use((err, req, res, next) => {
-    console.log('Error:', err.message);
-    res.status(422).json(err.message);
+  console.log("Error:", err.message);
+  res.status(422).json(err.message);
 });
 
 // Server Setup
-const port = process.env.PORT || 8000
-http.createServer(app).listen(port, ()=>{
-    console.log(`\x1b[32m`, `Server listening on: ${port}`, `\x1b[0m`)
+const port = process.env.PORT || 8000;
+http.createServer(app).listen(port, () => {
+  console.log(`\x1b[32m`, `Server listening on: ${port}`, `\x1b[0m`);
 });
