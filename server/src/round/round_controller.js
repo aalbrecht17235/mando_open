@@ -7,20 +7,20 @@ export default {
     });
   },
   create: (req, res, next) => {
-    const { number } = req.body;
-    if (!number) {
+    const { number, tournamentId } = req.body;
+    if (!number || !tournamentId) {
       return res.status(422).send({
         error: "Your must specify a number for the round."
       });
     }
-    Model.findOne({ number }, function(err, existing) {
+    Model.findOne({ number, tournamentId }, function(err, existing) {
       if (err) return res.status(422).send(err);
       if (existing) {
         return res
           .status(422)
           .send({ error: "Round with this number already exists." });
       }
-      const round = new Model({ number });
+      const round = new Model({ number, tournamentId });
       round.save(function(err, savedModel) {
         if (err) {
           return next(err);
@@ -34,8 +34,8 @@ export default {
   },
 
   find: (req, res, next) => {
-    const { number } = req.query;
-    Model.findOne({ number }, function(err, foundModel) {
+    const { number, tournamentId } = req.query;
+    Model.findOne({ number, tournamentId }, function(err, foundModel) {
       if (err) return res.status(422).send(err);
       if (foundModel) {
         return res.json({ round: foundModel });
