@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import RoundList from "../RoundList";
 
 class CurrentTournament extends Component {
   constructor(props) {
@@ -27,7 +28,10 @@ class CurrentTournament extends Component {
         {this.state.tournament.name === undefined ? (
           <div>Current Tournament name not loaded</div>
         ) : (
-          <div>Current Tournament name: {this.state.tournament.name}</div>
+          <div>
+            Current Tournament name: {this.state.tournament.name}
+            <RoundList />
+          </div>
         )}
       </div>
     );
