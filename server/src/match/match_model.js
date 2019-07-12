@@ -7,17 +7,17 @@ const matchSchema = new Schema({
     ref: "Round",
     required: true
   },
-  startTime: { type: String, required: true },
-  teams: {
-    team1: {
-      players: [{ type: Schema.Types.ObjectId, ref: "Player" }],
-      name: { type: String, unique: true }
+  startTime: { type: String, required: true, unique: true },
+  teams: [
+    {
+      players: [{ type: String, ref: "Player" }],
+      name: { type: String }
     },
-    team2: {
-      players: [{ type: Schema.Types.ObjectId, ref: "Player" }],
-      name: { type: String, unique: true }
+    {
+      players: [{ type: String, ref: "Player" }],
+      name: { type: String }
     }
-  }
+  ]
 });
 
 export default model.call(require("mongoose"), "Match", matchSchema);
