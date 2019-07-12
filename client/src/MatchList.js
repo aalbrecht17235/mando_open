@@ -32,7 +32,7 @@ class MatchList extends Component {
   }
   render() {
     return (
-      <div>
+      <div style={{ border: "2px solid orange" }}>
         <div>Match List</div>
         <div>
           {this.state.matches.map(match => (

@@ -5,7 +5,7 @@ export class Round extends Component {
   handleClick() {}
   render() {
     return (
-      <div>
+      <div style={{ border: "2px solid" }}>
         <div>Round number: test {this.props.round.number}</div>
         <div>
           <MatchList roundId={this.props.round._id} />

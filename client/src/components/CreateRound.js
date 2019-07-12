@@ -30,6 +30,7 @@ export class CreateRound extends Component {
   render() {
     return (
       <form>
+        Create a new round!
         <div>
           Round number:
           <input

@@ -69,7 +69,7 @@ class CreateMatch extends Component {
 
   render() {
     return (
-      <form>
+      <form style={{ border: "2px solid purple", margin: "5px" }}>
         <div>
           Match Start Time:
           <input
