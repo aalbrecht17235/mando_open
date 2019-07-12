@@ -6,12 +6,7 @@ class CreateMatch extends Component {
     super(props);
     this.state = {
       startTime: "08:00",
-      players: [
-        { name: "Ross" },
-        { name: "Andrew" },
-        { name: "Mark" },
-        { name: "Megan" }
-      ],
+      players: [],
       selectTeam1: false,
       selectTeam2: false,
       teams: [[], []],
@@ -20,10 +15,20 @@ class CreateMatch extends Component {
     this.createNewMatch = this.createNewMatch.bind(this);
   }
 
+  componentDidMount() {
+    axios.get("/player").then(res => {
+      const { error, players } = res.data;
+      if (error) {
+        this.setState(error);
+      } else {
+        this.setState({ players, error: null });
+      }
+    });
+  }
+
   createNewMatch() {
     const startTime = this.state.startTime;
     const roundId = this.props.roundId;
-    console.log("roundId: ", roundId, " Start Time: ", startTime);
     axios
       .post("/match/create", { startTime, roundId })
       .then(res => {

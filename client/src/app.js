@@ -21,6 +21,7 @@ import { AUTH_USER } from "./actions/types";
 
 import "../style/style.scss";
 import CurrentTournament from "./components/CurrentTournament";
+import PlayerList from "./components/PlayerList";
 
 const createStoreWithMiddleware = applyMiddleware(reduxThunk)(createStore);
 const store = createStoreWithMiddleware(reducers);
@@ -42,7 +43,7 @@ ReactDOM.render(
           <Route path="/tournament/:id" component={CurrentTournament} />
           <Route path="/tournament" component={Tournament} />
           <Route path="/tournament_list" component={TournamentList} />
-
+          <Route path="/players" component={PlayerList} />
           <Route path="/signin" component={Signin} />
           <Route path="/signup" component={Signup} />
           <Route path="/signout" component={Signout} />
