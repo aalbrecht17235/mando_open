@@ -8,7 +8,7 @@ export class Round extends Component {
       <div>
         <div>Round number: test {this.props.round.number}</div>
         <div>
-          <MatchList />
+          <MatchList roundId={this.props.round._id} />
         </div>
       </div>
     );

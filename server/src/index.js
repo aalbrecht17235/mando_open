@@ -10,6 +10,7 @@ import Authentication from "./api/authentication";
 import UserRouter from "./user/router";
 import TournamentRouter from "./tournament/tournament_router";
 import RoundRouter from "./round/round_router";
+import MatchRouter from "./match/match_router";
 
 if (!process.env.JWT_SECRET) {
   const err = new Error("No JWT_SECRET in env variable");
@@ -43,6 +44,7 @@ app.get("/auth-ping", Middlewares.loginRequired, (req, res) =>
 app.use("/user", Middlewares.loginRequired, UserRouter);
 app.use("/tournament", TournamentRouter);
 app.use("/round", RoundRouter);
+app.use("/match", MatchRouter);
 
 app.use((err, req, res, next) => {
   console.log("Error:", err.message);

@@ -6,21 +6,21 @@ export default {
       return res.json({ matches });
     });
   },
+
   create: (req, res, next) => {
-    const { date, tournamentId } = req.body;
-    if (!date || !tournamentId) {
-      return res.status(422).send({
+    const { startTime, roundId } = req.body;
+    if (!startTime || !roundId) {
+      return res.status(422).json({
         error: "Your must specify a date for the match."
       });
     }
-    Model.findOne({ date, tournamentId }, function(err, existing) {
+    Model.findOne({ startTime, roundId }, function(err, existing) {
       if (err) return res.status(422).send(err);
       if (existing) {
-        return res
-          .status(422)
-          .send({ error: "Match with this time already exists." });
+        console.log("FOUND MATCHING MATCH");
+        res.json({ error: "Match with this time already exists." });
       }
-      const round = new Model({ date, tournamentId });
+      const round = new Model({ startTime, roundId });
       round.save(function(err, savedModel) {
         if (err) {
           return next(err);
@@ -34,8 +34,8 @@ export default {
   },
 
   find: (req, res, next) => {
-    const { date, tournamentId } = req.query;
-    Model.findOne({ date, tournamentId }, function(err, foundModel) {
+    const { startTime, roundId } = req.query;
+    Model.findOne({ startTime, roundId }, function(err, foundModel) {
       if (err) return res.status(422).send(err);
       if (foundModel) {
         return res.json({ match: foundModel });

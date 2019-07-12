@@ -2,12 +2,12 @@
 import { Schema, model } from "mongoose";
 
 const matchSchema = new Schema({
-  roundtId: {
+  roundId: {
     type: Schema.Types.ObjectId,
     ref: "Round",
     required: true
   },
-  startTime: { type: Date, required: true },
+  startTime: { type: String, required: true },
   teams: {
     team1: {
       players: [{ type: Schema.Types.ObjectId, ref: "Player" }],

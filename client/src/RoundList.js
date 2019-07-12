@@ -26,7 +26,11 @@ class RoundList extends Component {
       <div>
         {this.state.rounds.length > 0 ? (
           rounds.map(round => (
-            <Round key={`round${round.number}+${tournamentId}`} round={round} />
+            <Round
+              key={`round${round.number}+${tournamentId}`}
+              round={round}
+              tournamentId={tournamentId}
+            />
           ))
         ) : (
           <div>There are no rounds</div>
