@@ -59,6 +59,7 @@ class CreateMatch extends Component {
             style={{ margin: "10px" }}
           />
         </div>
+        {/* TODO: Make a TeamSelect component */}
         <button
           onClick={() =>
             this.setState({ selectTeam1: !this.state.selectTeam1 })
