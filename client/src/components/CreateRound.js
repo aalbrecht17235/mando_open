@@ -11,14 +11,8 @@ export class CreateRound extends Component {
     this.createNewRound = this.createNewRound.bind(this);
   }
   createNewRound() {
-    const number = this.state.number;
-    const tournamentId = this.props.tournamentId;
-    console.log(
-      "attempt to create entity, nunmber: ",
-      number,
-      " TournyId: ",
-      tournamentId
-    );
+    const { number, tournamentId } = this.props;
+    console.log("number: ", number, "tournamentId: ", tournamentId);
     axios
       .post("/round/create", { number, tournamentId })
       .then(res => window.location.reload())
@@ -29,22 +23,9 @@ export class CreateRound extends Component {
 
   render() {
     return (
-      <form style={{ border: "2px solid pink", margin: "5px" }}>
-        Create a new round!
-        <div>
-          Round number:
-          <input
-            type="number"
-            value={this.state.number}
-            onChange={e => this.setState({ number: e.target.value })}
-            placeholder="Round number"
-            style={{ margin: "10px" }}
-          />
-        </div>
-        <div>
-          <button onClick={this.createNewRound}>Submit</button>
-        </div>
-      </form>
+      <div style={{ border: "2px solid pink", margin: "5px" }}>
+        <button onClick={this.createNewRound}>Add Round</button>
+      </div>
     );
   }
 }

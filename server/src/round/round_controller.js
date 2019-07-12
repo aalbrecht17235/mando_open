@@ -52,6 +52,7 @@ export default {
       if (err) return res.status(422).send(err);
       if (deletedModel) {
         const roundId = deletedModel._id;
+        //TODO: refactor this to be axios.delete("/match", {params: {roundId}})
         MatchModel.find({ roundId }, function(err, foundMatches) {
           console.log("Found matches for round: ", foundMatches);
           foundMatches.forEach(match =>

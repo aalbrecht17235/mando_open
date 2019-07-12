@@ -22,9 +22,10 @@ class RoundList extends Component {
   render() {
     const rounds = this.state.rounds;
     const tournamentId = this.props.tournamentId;
+    const roundCount = this.state.rounds.length;
     return (
       <div>
-        {this.state.rounds.length > 0 ? (
+        {roundCount > 0 ? (
           rounds.map(round => (
             <Round
               key={`round${round.number}+${tournamentId}`}
@@ -35,7 +36,7 @@ class RoundList extends Component {
         ) : (
           <div>There are no rounds</div>
         )}
-        <CreateRound tournamentId={tournamentId} />
+        <CreateRound number={roundCount + 1} tournamentId={tournamentId} />
       </div>
     );
   }
