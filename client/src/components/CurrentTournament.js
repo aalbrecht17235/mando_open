@@ -23,7 +23,7 @@ class CurrentTournament extends Component {
   }
   render() {
     return (
-      <div>
+      <div style={{ border: "2px solid cyan", margin: "5px" }}>
         {this.state.tournament.name === undefined ? (
           <div>Current Tournament name not loaded</div>
         ) : (

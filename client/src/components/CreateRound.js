@@ -21,7 +21,7 @@ export class CreateRound extends Component {
     );
     axios
       .post("/round/create", { number, tournamentId })
-      .then(res => {})
+      .then(res => window.location.reload())
       .catch(err =>
         console.log("Error occured while attempting to create Round", err)
       );
@@ -29,7 +29,7 @@ export class CreateRound extends Component {
 
   render() {
     return (
-      <form>
+      <form style={{ border: "2px solid pink", margin: "5px" }}>
         Create a new round!
         <div>
           Round number:

@@ -1,4 +1,5 @@
 import Model from "./round_model";
+import MatchModel from "../match/match_model";
 
 export default {
   list: (req, res, next) => {
@@ -41,6 +42,36 @@ export default {
         return res.json({ round: foundModel });
       } else {
         return res.status(404).send("Round not found");
+      }
+    });
+  },
+
+  deleteByNumber: (req, res, next) => {
+    const { number } = req.query;
+    Model.findOne({ number }, function(err, deletedModel) {
+      if (err) return res.status(422).send(err);
+      if (deletedModel) {
+        const roundId = deletedModel._id;
+        MatchModel.find({ roundId }, function(err, foundMatches) {
+          console.log("Found matches for round: ", foundMatches);
+          foundMatches.forEach(match =>
+            match.remove(function(err, removedMatch) {
+              if (err) {
+                return res.json(
+                  `Error occured while trying to delete match ${match.name}`
+                );
+              }
+            })
+          );
+        });
+        deletedModel.remove(function(err, deletedModel) {
+          if (err) {
+            return res.json("Error occured while trying to delete entity");
+          }
+          return res.json({ deleted: deletedModel });
+        });
+      } else {
+        return res.status(404).send("Entity not found");
       }
     });
   }

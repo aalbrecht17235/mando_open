@@ -8,4 +8,6 @@ router.post("/create", RoundController.create);
 
 router.get("/find", RoundController.find);
 
+router.delete("/number", RoundController.deleteByNumber);
+
 export default router;
