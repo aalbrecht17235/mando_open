@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import Team from "../entities/Team";
 
 class CreateMatch extends Component {
   constructor(props) {
@@ -9,7 +10,7 @@ class CreateMatch extends Component {
       players: [],
       selectTeam1: false,
       selectTeam2: false,
-      teams: [[], []],
+      teams: [new Team("Team 1"), new Team("Team 2")],
       error: null
     };
     this.createNewMatch = this.createNewMatch.bind(this);
@@ -26,11 +27,25 @@ class CreateMatch extends Component {
     });
   }
 
+  validateMatch() {
+    const teams = this.state.teams;
+    for (const team in teams) {
+      if (teams[team].players.length !== 2) {
+        return false;
+      }
+    }
+    return true;
+  }
+
   createNewMatch() {
-    const startTime = this.state.startTime;
+    const { startTime, teams } = this.state;
     const roundId = this.props.roundId;
+    if (!this.validateMatch()) {
+      this.setState({ error: "Must select two players per team" });
+      return;
+    }
     axios
-      .post("/match/create", { startTime, roundId })
+      .post("/match/create", { startTime, teams, roundId })
       .then(res => {
         const error = res.data.error;
         if (error) {
@@ -40,19 +55,19 @@ class CreateMatch extends Component {
         }
         console.log("Match sucessfully created: ", res.data);
       })
-      .catch(err =>
-        console.log("Error occured while attempting to create match", err)
-      );
+      .catch(error => {
+        //TODO: Figure out how to pass a custom error message with a failure status
+        this.setState({ error: "An error occured" });
+      });
   }
 
   handleAddPlayer(team, player) {
     const teams = this.state.teams;
-    teams[team].push(player.name);
+    teams[team].players.push(player.name);
     this.setState({ teams });
   }
 
   render() {
-    console.log("Here are the teams", this.state.teams);
     return (
       <form>
         <div>

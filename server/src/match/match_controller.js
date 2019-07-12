@@ -8,19 +8,18 @@ export default {
   },
 
   create: (req, res, next) => {
-    const { startTime, roundId } = req.body;
-    if (!startTime || !roundId) {
-      return res.status(422).json({
-        error: "Your must specify a date for the match."
+    const { startTime, roundId, teams } = req.body;
+    if (!startTime || !roundId || !teams) {
+      return res.json({
+        error: "Your must specify a start time and teams for the match."
       });
     }
     Model.findOne({ startTime, roundId }, function(err, existing) {
       if (err) return res.status(422).send(err);
       if (existing) {
-        console.log("FOUND MATCHING MATCH");
-        res.json({ error: "Match with this time already exists." });
+        return res.json({ error: "Match with this time already exists." });
       }
-      const round = new Model({ startTime, roundId });
+      const round = new Model({ startTime, roundId, teams });
       round.save(function(err, savedModel) {
         if (err) {
           return next(err);
