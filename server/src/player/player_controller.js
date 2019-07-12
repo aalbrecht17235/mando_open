@@ -14,9 +14,11 @@ export default {
       });
     }
     Model.findOne({ name, email }, function(err, existing) {
-      if (err) return res.status(422).send(err);
+      if (err) return res.status(422).json(err);
       if (existing) {
-        return res.json({ error: "Player with this name or email already exists." });
+        return res.json({
+          error: "Player with this name or email already exists."
+        });
       }
       const player = new Model({ name, email });
       player.save(function(err, savedModel) {
