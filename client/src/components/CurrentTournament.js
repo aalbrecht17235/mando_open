@@ -15,11 +15,10 @@ class CurrentTournament extends Component {
     axios
       .get("/tournament/find", { params: { tournamentName } })
       .then(res => {
-        console.log("CURRETN TOURNAMENT DATA: ", res.data.tournament);
         this.setState({ tournament: res.data.tournament });
       })
       .catch(err => {
-        console.log("An error occured while getting tournament", err);
+        console.error("An error occured while getting tournament", err);
       });
   }
   render() {

@@ -8,11 +8,14 @@ class MatchList extends Component {
     super();
     this.state = {
       matches: [],
+      reload: false,
       error: null
     };
+    this.reload = this.reload.bind(this);
   }
+
   componentDidMount() {
-    Axios.get("/match")
+    Axios.get("/match", { params: { roundId: this.props.roundId } })
       .then(res => {
         console.log("Match results: ", res.data);
         this.setState({ matches: res.data.matches, error: null });
@@ -21,6 +24,11 @@ class MatchList extends Component {
         console.error("Error while retreiving matches.", error);
         this.setState({ error });
       });
+  }
+
+  reload() {
+    console.log("RELOADING MATCHLLIST ");
+    this.setState({ reload: !this.state.reload });
   }
   render() {
     return (
@@ -32,7 +40,10 @@ class MatchList extends Component {
           ))}
         </div>
         <div>
-          <CreateMatch roundId={this.props.roundId} />
+          <CreateMatch
+            renderParent={this.reload}
+            roundId={this.props.roundId}
+          />
         </div>
       </div>
     );

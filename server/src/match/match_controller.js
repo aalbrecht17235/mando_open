@@ -2,7 +2,9 @@ import Model from "./match_model";
 
 export default {
   list: (req, res, next) => {
-    Model.find({}, (err, matches) => {
+    const { roundId } = req.query;
+    console.log("THIS IS THE ROUND ID: ", roundId);
+    Model.find({ roundId }, (err, matches) => {
       return res.json({ matches });
     });
   },
